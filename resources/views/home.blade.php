@@ -45,6 +45,14 @@
 
     <x-navbar></x-navbar>
 
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-4">
+        <p class="text-sm">&copy; {{ date('Y') }} CodeX Bites. All rights reserved.</p>
+    </footer>
+
+    <!-- Tambahan div di bawah footer -->
+    <div class="w-full h-24"></div>
+
     <!-- Script untuk handle Tambah ke Keranjang -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -71,5 +79,4 @@
             });
         });
     </script>
-
 </x-layout>
