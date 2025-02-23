@@ -11,6 +11,11 @@ export default {
     ],
     theme: {
         extend: {
+            colors: {
+                primary: "#8C1C13",   // Warna utama (misal: merah tua)
+                secondary: "#FDE68A", // Warna sekunder (misal: kuning)
+                dark: "#1E1E1E",      // Warna hitam pekat
+              },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
