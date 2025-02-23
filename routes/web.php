@@ -1,9 +1,9 @@
 <?php
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Produk; // Tambahkan ini!
-
-
+use App\Http\Controllers\KeranjangController;
 
 Route::get('/', function () {
     return view('logo', ["title" => "CodeX Bites"]);
@@ -15,7 +15,7 @@ Route::get('/home', function () {
     return view('home', [
         "title" => "Home",
         "menus" => $menus
-]);
+    ]);
 });
 
 Route::get('/detail', function () {
@@ -65,3 +65,10 @@ Route::get('/checkout', function () {
 Route::get('/invoice', function () {
     return view('invoice', ["title" => "Invoice"]);
 });
+
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+Route::post('/keranjang/add', [KeranjangController::class, 'add'])->name('keranjang.add');
+Route::post('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
+Route::delete('/keranjang/remove/{id}', [KeranjangController::class, 'remove'])->name('keranjang.remove');
+Route::delete('/keranjang/clear', [KeranjangController::class, 'clear'])->name('keranjang.clear');
+Route::post('/keranjang/update/{id}', [KeranjangController::class, 'updateQuantity']);

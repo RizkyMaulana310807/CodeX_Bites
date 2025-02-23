@@ -4,10 +4,12 @@
     <x-category></x-category>
 
     <!-- Wrapper utama dengan grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 p-4 place-items-center">
+    <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 p-4 place-items-center">
         @foreach ($menus as $menu)
             <!-- Card Menu -->
-            <div class="bg-white border border-gray-200 rounded-md shadow-md overflow-hidden w-full 
+            <div
+                class="bg-white border border-gray-200 rounded-md shadow-md overflow-hidden w-full 
                         min-w-[140px] max-w-[220px] sm:max-w-[240px] md:max-w-[260px] lg:max-w-[280px] xl:max-w-[300px] 
                         flex flex-col">
                 <a href="#">
@@ -25,13 +27,16 @@
                                 <i class="fas fa-star text-yellow-400 text-[8px] sm:text-[10px] md:text-xs"></i>
                             @endfor
                         </div>
-                        <span class="bg-secondary text-primary text-[8px] sm:text-[10px] md:text-xs font-semibold px-1 py-0.5 rounded ml-1">
+                        <span
+                            class="bg-secondary text-primary text-[8px] sm:text-[10px] md:text-xs font-semibold px-1 py-0.5 rounded ml-1">
                             {{ $menu->rating }}
                         </span>
                     </div>
                     <div class="mt-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                        <span class="text-sm sm:text-base font-bold text-gray-900">Rp.{{ number_format($menu->harga, 0, ',', '.') }}</span>
-                        <button class="tambah-keranjang w-full sm:w-auto text-white bg-primary hover:bg-[#6B150F] 
+                        <span
+                            class="text-sm sm:text-base font-bold text-gray-900">Rp.{{ number_format($menu->harga, 0, ',', '.') }}</span>
+                        <button
+                            class="tambah-keranjang w-full sm:w-auto text-white bg-primary hover:bg-[#6B150F] 
                                 focus:ring-2 focus:ring-primary/50 font-medium rounded-md text-[8px] sm:text-xs md:text-sm 
                                 px-2 py-1 sm:px-3 sm:py-1.5 transition"
                             data-produk-id="{{ $menu->id }}">
@@ -55,28 +60,33 @@
 
     <!-- Script untuk handle Tambah ke Keranjang -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll('.tambah-keranjang').forEach(button => {
-                button.addEventListener('click', function () {
+                button.addEventListener('click', function() {
                     let produkId = this.getAttribute('data-produk-id');
 
                     fetch('/keranjang/add', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            produk_id: produkId
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                produk_id: produkId
+                            })
                         })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message); // Notifikasi
-                    })
-                    .catch(error => console.error('Error:', error));
+                        .then(response => response
+                    .json()) // Pastikan response di-parse sebagai JSON
+                        .then(data => {
+                            alert(data.message); // Notifikasi sukses
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan, coba lagi!');
+                        });
                 });
             });
         });
     </script>
+
 </x-layout>

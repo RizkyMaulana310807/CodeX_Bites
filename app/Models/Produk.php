@@ -11,4 +11,8 @@ class Produk extends Model
 
     protected $table = 'produk'; // Nama tabel di database
     protected $fillable = ['kategori', 'nama', 'deskripsi', 'rating', 'harga', 'img'];
+    public function keranjang()
+    {
+        return $this->hasMany(Keranjang::class, 'produk_id');
+    }
 }
