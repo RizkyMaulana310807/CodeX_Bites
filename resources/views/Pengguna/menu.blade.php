@@ -3,14 +3,23 @@
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
+        {{-- Back Button --}}
+        <div class="mb-4 md:mb-6">
+            <a href="/" class="inline-flex items-center text-gray-600 hover:text-[#3E2723] transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                </svg>
+                Kembali
+            </a>
+        </div>
+
         {{-- DESKTOP MODE (md ke atas) --}}
         <div class="hidden md:flex gap-6">
             {{-- Gambar --}}
             <div class="w-1/2 rounded-xl overflow-hidden shadow-md">
                 @if ($menu->gambar)
-                    <img src="{{ asset('storage/' . $menu->gambar) }}"
-                         alt="{{ $menu->nama }}"
-                         class="w-full h-[28rem] object-cover object-center" />
+                    <img src="{{ asset('storage/' . $menu->gambar) }}" alt="{{ $menu->nama }}"
+                        class="w-full h-[28rem] object-cover object-center" />
                 @else
                     <div class="w-full h-[28rem] bg-gray-100 flex items-center justify-center text-gray-500">
                         Tidak ada gambar
@@ -48,12 +57,11 @@
                 <div class="mt-6 flex items-center gap-4">
                     <div class="flex items-center border rounded px-2 py-1">
                         <button type="button" class="text-lg font-bold px-2 text-gray-700 hover:text-indigo-600"
-                                onclick="decrement(this)">−</button>
+                            onclick="decrement(this)">−</button>
                         <input type="number" min="1" max="10" value="1"
-                               class="w-12 text-center text-sm outline-none no-spin"
-                               oninput="validateNumber(this)">
+                            class="w-12 text-center text-sm outline-none no-spin" oninput="validateNumber(this)">
                         <button type="button" class="text-lg font-bold px-2 text-gray-700 hover:text-indigo-600"
-                                onclick="increment(this)">+</button>
+                            onclick="increment(this)">+</button>
                     </div>
 
                     <button
@@ -65,72 +73,80 @@
         </div>
 
         {{-- MOBILE VERSION --}}
-<div class="md:hidden bg-white min-h-screen">
+        <div class="md:hidden bg-white min-h-screen">
+            {{-- Back Button for Mobile
+            <div class="absolute top-4 left-4 z-10">
+                <a href="/" class="bg-white/80 hover:bg-white rounded-full p-2 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            </div> --}}
 
-    {{-- Gambar --}}
-    <div class="w-full aspect-square overflow-hidden">
-        @if ($menu->gambar)
-            <img src="{{ asset('storage/' . $menu->gambar) }}"
-                alt="{{ $menu->nama }}"
-                class="w-full h-full object-cover" />
-        @else
-            <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500">
-                Tidak ada gambar
-            </div>
-        @endif
-    </div>
-
-    {{-- Detail Konten --}}
-    <div class="w-full -mt-4 rounded-t-2xl bg-white shadow-inner">
-        <div class="px-4 py-4 space-y-2 border-b">
-            <h1 class="text-xl font-semibold text-gray-800 leading-tight">{{ $menu->nama }}</h1>
-            <p class="text-[#3E2723] text-2xl font-bold">
-                Rp {{ number_format($menu->harga, 0, ',', '.') }}
-            </p>
-
-            <div class="flex items-center gap-4 text-xs text-gray-600">
-                @if ($menu->rating)
-                    <div class="flex items-center">
-                        ⭐ <span class="ml-1">{{ number_format($menu->rating, 1) }}</span>
+            {{-- Gambar --}}
+            <div class="w-full aspect-square overflow-hidden">
+                @if ($menu->gambar)
+                    <img src="{{ asset('storage/' . $menu->gambar) }}" alt="{{ $menu->nama }}"
+                        class="w-full h-full object-cover" />
+                @else
+                    <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-500">
+                        Tidak ada gambar
                     </div>
                 @endif
-                <span>Stok: {{ $menu->stock }}</span>
-                <span>Terjual: {{ $menu->jumlah_terjual }}</span>
             </div>
-        </div>
 
-        {{-- Deskripsi --}}
-        <div class="px-4 py-4 space-y-2 text-sm text-gray-700 leading-relaxed">
-            <h2 class="font-semibold text-gray-800">Deskripsi Produk</h2>
-            <p>{{ $menu->deskripsi ?? 'Tidak ada deskripsi tersedia.' }}</p>
-        </div>
-    </div>
+            {{-- Detail Konten --}}
+            <div class="w-full -mt-4 bg-white shadow-inner">
+                <div class="px-4 py-4 space-y-2 border-b">
+                    <h1 class="text-xl font-semibold text-gray-800 leading-tight">{{ $menu->nama }}</h1>
+                    <p class="text-[#3E2723] text-2xl font-bold">
+                        Rp {{ number_format($menu->harga, 0, ',', '.') }}
+                    </p>
 
-    {{-- Bottom Bar --}}
-    <div class="fixed bottom-0 left-0 right-0 bg-white shadow-inner p-3 flex items-center gap-3 border-t z-50">
-        {{-- Counter --}}
-        <div class="flex items-center border border-gray-300 rounded px-2 py-1 bg-gray-50">
-            <button type="button" class="text-lg font-bold px-2 text-gray-700 hover:text-[#3E2723]"
-                onclick="decrement(this)">−</button>
-            <input type="number" min="1" max="10" value="1"
-                class="w-10 text-center text-sm outline-none bg-transparent no-spin" oninput="validateNumber(this)">
-            <button type="button" class="text-lg font-bold px-2 text-gray-700 hover:text-[#3E2723]"
-                onclick="increment(this)">+</button>
-        </div>
+                    <div class="flex items-center gap-4 text-xs text-gray-600">
+                        @if ($menu->rating)
+                            <div class="flex items-center">
+                                ⭐ <span class="ml-1">{{ number_format($menu->rating, 1) }}</span>
+                            </div>
+                        @endif
+                        <span>Stok: {{ $menu->stock }}</span>
+                        <span>Terjual: {{ $menu->jumlah_terjual }}</span>
+                    </div>
+                </div>
 
-        {{-- Button --}}
-        <button
-            class="flex-1 bg-[#3E2723] hover:bg-[#2c1a17] text-white py-2 rounded-lg text-sm font-semibold transition">
-            Tambah ke Keranjang
-        </button>
-    </div>
-
-    {{-- Spacer untuk menghindari tumpang tindih dengan bottom bar --}}
-    <div class="h-20"></div>
-</div>
-
+                {{-- Deskripsi --}}
+                <div class="px-4 py-4 space-y-2 text-sm text-gray-700 leading-relaxed">
+                    <h2 class="font-semibold text-gray-800">Deskripsi Produk</h2>
+                    <p>{{ $menu->deskripsi ?? 'Tidak ada deskripsi tersedia.' }}</p>
+                </div>
             </div>
+
+            {{-- Bottom Bar --}}
+            <div class="fixed bottom-0 left-0 right-0 bg-white shadow-inner p-3 flex items-center gap-3 border-t z-50">
+                {{-- Counter --}}
+                <div class="flex items-center border border-gray-300 rounded px-2 py-1 bg-gray-50">
+                    <button type="button" class="text-lg font-bold px-2 text-gray-700 hover:text-[#3E2723]"
+                        onclick="decrement(this)">−</button>
+                    <input type="number" min="1" max="10" value="1"
+                        class="w-10 text-center text-sm outline-none bg-transparent no-spin"
+                        oninput="validateNumber(this)">
+                    <button type="button" class="text-lg font-bold px-2 text-gray-700 hover:text-[#3E2723]"
+                        onclick="increment(this)">+</button>
+                </div>
+
+                {{-- Button --}}
+                <button
+                    class="flex-1 bg-[#3E2723] hover:bg-[#2c1a17] text-white py-2 rounded-lg text-sm font-semibold transition">
+                    Tambah ke Keranjang
+                </button>
+            </div>
+
+            {{-- Spacer untuk menghindari tumpang tindih dengan bottom bar --}}
+            <div class="h-20"></div>
         </div>
+
+    </div>
+    </div>
     </div>
 
     <style>

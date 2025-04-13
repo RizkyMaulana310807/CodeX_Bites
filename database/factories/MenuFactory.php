@@ -17,7 +17,6 @@ class MenuFactory extends Factory
      */
     public function definition(): array
     {
-        $imageName = 'produk-' . fake()->unique()->uuid() . '.jpg';
 
         return [
             'nama' => fake()->sentence(3), // Nama produk berupa 3 kata acak
@@ -25,30 +24,7 @@ class MenuFactory extends Factory
             'rating' => fake()->randomFloat(1, 1, 5), // Rating 1.0 sampai 5.0 (1 desimal)
             'stock' => fake()->numberBetween(0, 1000), // Stok antara 0-1000
             'jumlah_terjual' => fake()->numberBetween(0, 5000), // Jumlah terjual 0-5000        
-            'gambar' => $imageName,
         ];
     }
 
-    public function configure()
-    {
-        return $this->afterCreating(function ($produk) {
-            // Generate gambar palsu dan simpan ke storage
-            $image = fake()->image(
-                dir: storage_path('app/public/produk'), // direktori penyimpanan
-                width: 800,
-                height: 600,
-                category: 'technics', // kategori gambar (food, nature, technics, etc)
-                fullPath: false
-            );
-
-            // Pindahkan gambar ke folder yang benar
-            Storage::disk('public')->put(
-                'produk/' . $produk->gambar,
-                file_get_contents(storage_path('app/public/produk/' . $image))
-            );
-
-            // Hapus file temporary
-            unlink(storage_path('app/public/produk/' . $image));
-        });
-    }
 }
