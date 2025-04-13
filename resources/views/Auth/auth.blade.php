@@ -94,45 +94,47 @@
 
             <form method="POST" action="{{ route('login') }}" class="space-y-3 md:space-y-4">
                 @csrf
-
+            
+                <!-- IDENTIFIER: Email atau Username -->
                 <div>
-                    <label for="login-identifier" class="block text-sm font-medium text-amber-900 mb-1">Username atau
-                        Email</label>
-                    <input type="text" id="login-identifier" x-model="loginData.identifier" required
+                    <label for="login-identifier" class="block text-sm font-medium text-amber-900 mb-1">Username atau Email</label>
+                    <input type="text" id="login-identifier" name="identifier" x-model="loginData.identifier" required
                         class="w-full px-3 md:px-4 py-2 rounded-lg border border-amber-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition text-sm md:text-base"
                         placeholder="username atau email@contoh.com">
                 </div>
-
+            
+                <!-- PASSWORD -->
                 <div>
                     <label for="login-password" class="block text-sm font-medium text-amber-900 mb-1">Password</label>
                     <div class="relative">
-                        <input :type="showLoginPassword ? 'text' : 'password'" id="login-password"
+                        <input :type="showLoginPassword ? 'text' : 'password'" id="login-password" name="password"
                             x-model="loginData.password" required
                             class="w-full px-3 md:px-4 py-2 rounded-lg border border-amber-300 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition text-sm md:text-base"
                             placeholder="••••••••">
                         <button type="button" @click="showLoginPassword = !showLoginPassword"
                             class="absolute right-3 top-1/2 transform -translate-y-1/2 text-amber-700 hover:text-amber-900">
-                            <i :class="showLoginPassword ? 'fa-eye-slash' : 'fa-eye'"
-                                class="fas text-sm md:text-base"></i>
+                            <i :class="showLoginPassword ? 'fa-eye-slash' : 'fa-eye'" class="fas text-sm md:text-base"></i>
                         </button>
                     </div>
                 </div>
-
+            
+                <!-- REMEMBER ME -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <input type="checkbox" id="remember-me"
+                        <input type="checkbox" id="remember-me" name="remember"
                             class="h-4 w-4 text-amber-600 focus:ring-amber-500 border-amber-300 rounded">
                         <label for="remember-me" class="ml-2 block text-xs md:text-sm text-amber-800">Ingat saya</label>
                     </div>
-                    <a href="#" class="text-xs md:text-sm font-medium text-amber-700 hover:text-amber-900">Lupa
-                        password?</a>
+                    <a href="#" class="text-xs md:text-sm font-medium text-amber-700 hover:text-amber-900">Lupa password?</a>
                 </div>
-
+            
+                <!-- SUBMIT BUTTON -->
                 <button type="submit"
                     class="w-full bg-chocolate text-white py-2 px-4 rounded-lg hover:bg-amber-800 transition-colors duration-300 font-medium text-sm md:text-base">
                     Masuk
                 </button>
             </form>
+            
         </div>
 
         <!-- Register Form -->
