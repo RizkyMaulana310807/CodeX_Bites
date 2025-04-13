@@ -1,64 +1,55 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Menampilkan form login/register
-    public function showAuthForm()
-    {
-        return view('auth.auth');
-    }
 
-    // Proses login
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
 
-        if (Auth::attempt($credentials)) {
+    public function login(Request $request) {
+        $credentials = $request->only('identifier', 'password');
+
+        // Bisa login pakai email atau username
+        $login_type = filter_var($credentials['identifier'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        if (Auth::attempt([$login_type => $credentials['identifier'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+            'identifier' => 'Email/Username atau password salah.',
+        ]);
     }
 
-    // Proses register
-    public function register(Request $request)
-    {
-        $validatedData = $request->validate([
+    public function register(Request $request) {
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'class' => 'required|string',
-            'phone' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'username' => 'required|unique:users,username',
+            'class' => 'required',
+            'phone' => 'nullable|string|max:20',
         ]);
 
         $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
-            'class' => $validatedData['class'],
-            'phone' => $validatedData['phone'],
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'username' => $validated['username'],
+            'class' => $validated['class'],
+            'phone' => $validated['phone'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         Auth::login($user);
-
-        return redirect('/dashboard');
+        return redirect('/');
     }
 
-    // Proses logout
-    public function logout(Request $request)
-    {
+    public function logout(Request $request) {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

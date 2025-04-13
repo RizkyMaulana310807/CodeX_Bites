@@ -8,7 +8,7 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/', action: function () {
     return view('Pengguna.menus', ["title" => "Beranda", "menus" => Menu::all()]);
-});
+})->middleware('auth');
 
 Route::get('/menu/{menu}', function (Menu $menu) {
     return view('Pengguna.menu', ["title" => "Detail Menu", "menu" => $menu]);

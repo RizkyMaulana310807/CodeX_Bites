@@ -48,7 +48,7 @@
     <!-- Dropdown keranjang (contoh) -->
     <div x-show="cartOpen" @click.away="cartOpen = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95">
         <div class="py-2 px-4">
-            <p class="text-sm text-gray-700">Sepertinya kamu belum login nih. <a href="#" class="underline text-blue-800">Login</a></p>
+            <p class="text-sm text-gray-700">Sepertinya kamu belum login nih. <a href="/auth" class="underline text-blue-800">Login</a></p>
         </div>
     </div>
 </nav>
